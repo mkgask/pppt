@@ -72,10 +72,15 @@ call_user_func(function() use($argc, $argv) {
         }
 
         array_map(function($check, $output) {
-            $check = str_replace("\r", '[cr]', $check);
-            $check = str_replace("\n", '[lf]', $check);
-            $output = str_replace("\r", '[cr]', $output);
-            $output = str_replace("\n", '[lf]', $output);
+            if(false !== strpos($output, "\r") || false !== strpos($output, "\n")) {
+                $check = str_replace("\r", '[cr]', $check);
+                $check = str_replace("\n", '[lf]', $check);
+                $output = str_replace("\r", '[cr]', $output);
+                $output = str_replace("\n", '[lf]', $output);
+            } else {
+                $check = str_replace("\r", '', $check);
+                $check = str_replace("\n", '', $check);
+            }
             echo 'check  : ', print_r($check, true), PHP_EOL;
             echo 'output : ', print_r($output, true), PHP_EOL;
             if($check === $output ||

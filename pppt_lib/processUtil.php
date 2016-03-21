@@ -40,8 +40,8 @@ class processUtil {
 
     function io($write_data_list) {
         $output = '';
-        $write = implode("\r", $write_data_list);
-        fwrite($this->pipes[self::in], $write);
+        $write = implode('', $write_data_list);
+        fwrite($this->pipes[self::in], $write.PHP_EOL);
         fclose($this->pipes[self::in]);
         while(!feof($this->pipes[self::out])) {
             $read = fread($this->pipes[self::out], self::blogsize);
