@@ -1,8 +1,7 @@
 
 ## paiza php power tool
 
-You need to install vagrant and vagrant-itamae.
-
+You will already know, ***It does not guarantee success in paiza***
 
 
 ### PHP 7.0.1 with Ubuntu/trusty64 in Vagrant
