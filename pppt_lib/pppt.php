@@ -87,9 +87,9 @@ call_user_func(function() use($argc, $argv) {
             echo $c1, '-', $c2, ': output : ', print_r($output, true), PHP_EOL;
             ++$c2;
             if($check === $output ||
-                ($check === 'null'  && is_null($output)) ||
-                ($check === 'True'  && is_bool($check) &&  $check) ||
-                ($check === 'False' && is_bool($check) && !$check)
+                (0 === strcasecmp('null',  $check) && is_null($output)) ||
+                (0 === strcasecmp('true',  $check) && is_bool($check) &&  $check) ||
+                (0 === strcasecmp('false', $check) && is_bool($check) && !$check)
                 ) {
                 echo '    true', PHP_EOL;
                 return;
