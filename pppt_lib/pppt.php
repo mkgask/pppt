@@ -57,7 +57,8 @@ call_user_func(function() use($argc, $argv) {
         echo 'Warning: Is deferrent number of input files and check files.', PHP_EOL;
     }
 
-    array_map(function($input_list, $check_list) use($argv, $processUtil) {
+    $c1 = 1;
+    array_map(function($input_list, $check_list) use($argv, $processUtil, &$c1) {
         $input_count = count($input_list);
         $check_count = count($check_list);
         $output_list = [];
@@ -71,7 +72,8 @@ call_user_func(function() use($argc, $argv) {
             $output_list = $processUtil->io_list($input_list);
         }
 
-        array_map(function($check, $output) {
+        $c2 = 1;
+        array_map(function($check, $output) use(&$c1, &$c2) {
             if(false !== strpos($output, "\r") || false !== strpos($output, "\n")) {
                 $check = str_replace("\r", '[cr]', $check);
                 $check = str_replace("\n", '[lf]', $check);
@@ -81,18 +83,20 @@ call_user_func(function() use($argc, $argv) {
                 $check = str_replace("\r", '', $check);
                 $check = str_replace("\n", '', $check);
             }
-            echo 'check  : ', print_r($check, true), PHP_EOL;
-            echo 'output : ', print_r($output, true), PHP_EOL;
+            echo $c1, '-', $c2, ': check  : ', print_r($check, true), PHP_EOL;
+            echo $c1, '-', $c2, ': output : ', print_r($output, true), PHP_EOL;
+            ++$c2;
             if($check === $output ||
                 ($check === 'null'  && is_null($output)) ||
-                ($check === 'true'  && is_bool($check) &&  $check) ||
-                ($check === 'false' && is_bool($check) && !$check)
+                ($check === 'True'  && is_bool($check) &&  $check) ||
+                ($check === 'False' && is_bool($check) && !$check)
                 ) {
                 echo '    true', PHP_EOL;
                 return;
             }
             echo '    false', PHP_EOL;
         }, $check_list, $output_list);
+        ++$c1;
 
     }, $input_data_list, $check_data_list);
 
