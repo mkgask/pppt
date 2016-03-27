@@ -63,15 +63,25 @@ call_user_func(function() use($argc, $argv) {
         $check_count = count($check_list);
         $output_list = [];
 
+        $display_input = array_map(function($v) {
+            return str_replace(["\r", "\n"], ["[cr]", "[lf]"], $v);
+        }, $input_list);
+
         if((array_key_exists(2, $argv) && $argv[2] === 'list')) {
+            echo $c1, ': input io_list : ', print_r($display_input, true), PHP_EOL;
             $output_list = $processUtil->io_list($input_list);
         } else
         if((array_key_exists(2, $argv) && $argv[2] === 'one')) {
+            echo $c1, ': input io_one  :', PHP_EOL;
+            foreach($display_input as $input_one) { echo $c1, ': input : ', $input_one, PHP_EOL; }
             $output_list = $processUtil->io_one($input_list);
         } else
         if($input_count === $check_count) {
+            echo $c1, ': input io_one  :', PHP_EOL;
+            foreach($display_input as $input_one) { echo $c1, ': input : ', $input_one, PHP_EOL; }
             $output_list = $processUtil->io_one($input_list);
         } else {
+            echo $c1, ': input io_list  : ', print_r($display_input, true), PHP_EOL;
             $output_list = $processUtil->io_list($input_list);
         }
 
