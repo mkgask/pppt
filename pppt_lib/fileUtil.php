@@ -21,7 +21,40 @@ class fileUtil {
         }
         return implode('/', $argv);
     }
-//log::w('return:  '. log::v(implode('/', $argv)), __FILE__, __LINE__, __CLASS__, __FUNCTION__);
+
+    static function create_file($path) {
+        $path = (string)$path;
+        if(!$path || 'Array' === $path || 'Object' === $path) {
+            return "Nothing create file path";
+        }
+        if(file_exists($path)) {
+            return "file exist";
+        }
+        if(!self::create_dir($path)) {
+            return "Failed to create dir";
+        }
+        if(!touch($path)) {
+            return "Failed to create file";
+        }
+        return 'create';
+    }
+
+    static function create_dir($path) {
+        $pathinfo = pathinfo($path);
+        if($pathinfo['filename']) {
+            $path = $pathinfo['dirname'];
+        }
+        if(is_dir($path)) {
+            return true;
+        }
+        $path_items = explode(DIRECTORY_SEPARATOR, $path);
+        $dir = '';
+        foreach($path_items as $item) {
+            $dir = self::create_path($dir, $item);
+            if(is_dir($dir)) { continue; }
+            if(!mkdir($dir)) { return false; }
+        }
+    }
 
     static function get_data_list($glob) {
         if(!$glob) { return []; }
