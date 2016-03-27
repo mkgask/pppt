@@ -4,12 +4,10 @@ call_user_func(function() use($argc, $argv) {
 
     // Initialize
     require __DIR__.'/autoload.php';
-    //require __DIR__.'/processUtil.php';
-    //require __DIR__.'/fileUtil.php';
     $current_dir = getcwd();
 
     // get target php file path
-    if($argc < 2) {
+    if(2 > $argc) {
         throw new Exception("There is no specification of argument.", 1);
     }
 
