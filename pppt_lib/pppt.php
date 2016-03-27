@@ -63,12 +63,15 @@ call_user_func(function() use($argc, $argv) {
         $check_count = count($check_list);
         $output_list = [];
 
-        if((array_key_exists(2, $argv) && $argv[2] === 'one') || $input_count === $check_count) {
+        if((array_key_exists(2, $argv) && $argv[2] === 'list')) {
+            $output_list = $processUtil->io_list($input_list);
+        } else
+        if((array_key_exists(2, $argv) && $argv[2] === 'one')) {
             $output_list = $processUtil->io_one($input_list);
         } else
-        if((array_key_exists(2, $argv) && $argv[2] === 'list') || 1 === $check_count) {
-            $output_list = $processUtil->io_list($input_list);
-        } else  {
+        if($input_count === $check_count) {
+            $output_list = $processUtil->io_one($input_list);
+        } else {
             $output_list = $processUtil->io_list($input_list);
         }
 
