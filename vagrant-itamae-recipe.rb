@@ -17,14 +17,14 @@ echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> /home/vagrant/.bashrc
 echo 'eval "$(phpenv init -)"' >> /home/vagrant/.bashrc
 . /home/vagrant/.bashrc
 EOH
-    not_if '/home/vagrant/.phpenv'
+    not_if 'ls /home/vagrant |grep .phpenv'
 end
 
 execute 'git clone phpenv' do
     command <<-"EOH"
 git clone https://github.com/php-build/php-build.git /home/vagrant/.phpenv/plugins/php-build
 EOH
-    not_if '/home/vagrant/.phpenv/plugins/php-build'
+    not_if 'ls /home/vagrant/.phpenv/plugins |grep php-build'
 end
 
 execute 'install php 7.0.1' do
@@ -32,7 +32,7 @@ execute 'install php 7.0.1' do
 /home/vagrant/.phpenv/bin/phpenv install 7.0.1
 /home/vagrant/.phpenv/bin/phpenv global 7.0.1
 EOH
-    not_if '/home/vagrant/.phpenv/versions/7.0.1'
+    not_if 'ls /home/vagrant/.phpenv/versions |grep 7.0.1'
 end
 
 execute 'install composer' do
@@ -43,7 +43,7 @@ php -r "if (hash('SHA384', file_get_contents('composer-setup.php')) === '41e71d8
 php composer-setup.php
 mv composer-setup.php /usr/local/bin/composer
 EOH
-    not_if '/usr/local/bin/composer'
+    not_if 'ls /usr/local/bin |grep composer'
 end
 
 execute 'install phpunit' do
@@ -53,5 +53,5 @@ composer require phpunit/phpunit
 sed 's/require/require-dev/' -i composer.json
 ln -s /vagrant/vendor/bin/phpunit /usr/local/bin/phpunit
 EOH
-    not_if '/vagrant/vendor/bin/phpunit'
+    not_if '/vagrant/vendor/bin |grep phpunit'
 end
