@@ -1,6 +1,7 @@
 
 execute "initial os check" do
     command <<-"EOH"
+echo 'Asia/Tokyo' |tee /etc/timezone
 apt-get update
 apt-get upgrade -y
 EOH
