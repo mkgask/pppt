@@ -54,5 +54,5 @@ composer require phpunit/phpunit
 sed 's/require/require-dev/' -i composer.json
 ln -s /vagrant/vendor/bin/phpunit /usr/local/bin/phpunit
 EOH
-    not_if '/vagrant/vendor/bin |grep phpunit'
+    not_if 'ls /vagrant/vendor/bin |grep phpunit'
 end
