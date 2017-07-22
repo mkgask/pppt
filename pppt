@@ -1,2 +1,2 @@
-#!/bin/bash
-php pppt_lib/pppt.php $@
+#!/bin/sh
+php /storage/pppt_lib/pppt.php $@
