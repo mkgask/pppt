@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+
+    php:
+        image: php:7.0.8
+        volumes_from:
+            - storage
+        tty: true
+
+    storage:
+        image: busybox
+        volumes:
+            - ./:/storage
+        tty: true
